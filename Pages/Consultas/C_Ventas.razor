@@ -1,0 +1,75 @@
+﻿@page "/C_Ventas"
+@inject VentasBLL VentasBLL
+@inject ClientesBLL ClientesBLL
+
+
+<div class= "card font-monospace" style="max-width: 1000px;  left: 50%; transform: translate( -50%);">
+
+     <div class="card-header" style="background-color: #D9B382">
+               <div class="row" style="flex-direction: row; align-items: center;">
+                    <div class="col-3">
+                        <div style="width: 100%; display: flex; justify-content: center;">
+                            <img src="https://cdn-icons-png.flaticon.com/512/1019/1019607.png" alt="pan" style=" max-width: 50%; height: auto;">
+                        </div>
+                    </div>
+                    <div class="col-9">
+                        <h1 style="text-align: center;"> Consulta de Ventas</h1>
+                    </div>
+                </div>
+            </div>
+
+    <div class="card-body">
+        <RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced" AllowSorting="true"  AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true"
+    Data="@listaVentas" TItem="Ventas" LogicalFilterOperator="LogicalFilterOperator.Or" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" >
+        <Columns>
+        <RadzenDataGridColumn TItem="Ventas" Property="VentaId" Title="ID" Frozen="true" Width="90px" Filterable="false" />
+         <RadzenDataGridColumn TItem="Ventas" Property="ClienteId" Title="Cliente" Frozen="true" Width="160px">
+            <Template Context="venta">
+               (@venta.ClienteId) @(ClientesBLL.Buscar(venta.ClienteId)?.Nombre) 
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="Ventas" Property="Concepto" Title="Concepto"  Width="160px" />
+        <RadzenDataGridColumn TItem="Ventas" Property="TipoVenta" Title="Tipo Venta" Width="160px"/>
+        <RadzenDataGridColumn TItem="Ventas" Property="Monto" Title="Monto" Width="150px"/>
+        <RadzenDataGridColumn TItem="Ventas" Property="Balance" Title="Balance" Width="150px" />
+        <RadzenDataGridColumn TItem="Ventas" Property="Ganacias" Title="Ganacias" Width="150px" />
+        <RadzenDataGridColumn TItem="Ventas" Property="Fecha" Title="Fecha"  Width="160px" FormatString="{0:d}"/>
+        <RadzenDataGridColumn TItem="Ventas" Filterable="false" Width="100px">
+            <Template Context="venta" >
+            <a href="@($"/R_Ventas/{venta.VentaId}")">Ver</a>
+            
+            </Template>
+        </RadzenDataGridColumn>
+        </Columns>   
+    </RadzenDataGrid>
+
+     </div>
+
+    
+
+</div>
+
+<RadzenContent class="fs-6">
+    
+
+</RadzenContent>
+
+
+
+@code{
+    List<Ventas> listaVentas = new List<Ventas>();
+    
+    
+   
+     protected override void OnInitialized()
+     {
+        listaVentas = VentasBLL.GetList(o=> true);
+     }
+
+     
+
+
+}
+
+
+
