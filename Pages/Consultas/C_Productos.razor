@@ -1,0 +1,63 @@
+﻿@page "/C_productos"
+@inject ProductosBLL productosBLL
+
+<div class= "card font-monospace" style="max-width: 1000px;  left: 50%; transform: translate( -50%);">
+
+     <div class="card-header" style="background-color: #D9B382">
+               <div class="row" style="flex-direction: row; align-items: center;">
+                    <div class="col-3">
+                        <div style="width: 100%; display: flex; justify-content: center;">
+                            <img src="(Agrega iconos )" alt="pan" style=" max-width: 50%; height: auto;">
+                        </div>
+                    </div>
+                    <div class="col-9">
+                        <h1 style="text-align: center;"> Consulta de Productos</h1>
+                    </div>
+                </div>
+            </div>
+    <div class="card-body">
+        <RadzenDataGrid   AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced" AllowSorting="true"  AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true"
+            Data="@listaProductos" TItem="Productos" LogicalFilterOperator="LogicalFilterOperator.Or" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"  >
+        <Columns>
+        <RadzenDataGridColumn TItem="Productos" Property="ProductoId" Title="ID" Width="100px"  Filterable="false" Frozen= "true" />
+        <RadzenDataGridColumn TItem="Productos" Property="Nombre" Title="Nombre" Width="160px" Frozen= "true" />
+        <RadzenDataGridColumn TItem="Productos" Property="Descripcion" Title="Descripción" Width="300px" />
+        <RadzenDataGridColumn TItem="Productos" Property="Precio" Title="Precio" Width="150px" />
+        <RadzenDataGridColumn TItem="Productos" Property="Costo" Title="Costo" Width="150px" />
+        <RadzenDataGridColumn TItem="Productos" Property="Cantidad" Title="Cantidad" Width="150px" />
+        <RadzenDataGridColumn TItem="Productos" Property="Fecha" Title="Fecha" Width="150px" FormatString="{0:d}"/>
+        <RadzenDataGridColumn TItem="Productos" Filterable="false" Width="100px">
+            <Template Context="producto">
+            <a href="@($"/R_Productos/{producto.ProductoId}")">Ver</a>
+            
+            </Template>
+        </RadzenDataGridColumn>
+        </Columns>   
+    </RadzenDataGrid>
+     </div>
+
+ 
+</div>
+
+<RadzenContent class="fs-6">
+    
+
+</RadzenContent>
+
+
+
+@code{
+    List<Productos> listaProductos = new List<Productos>();
+    
+    
+   
+     protected override void OnInitialized()
+     {
+        listaProductos = productosBLL.GetList(o=> true);
+     }
+
+
+}
+
+
+
