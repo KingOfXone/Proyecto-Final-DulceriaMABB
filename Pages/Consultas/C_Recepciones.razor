@@ -1,0 +1,66 @@
+﻿@page "/C_Recepciones"
+@inject RecepcionesBLL RecepcionesBLL
+@inject ProductosBLL ProductosBLL
+
+
+   <div class= "card fs-6 font-monospace" style="max-width: 1000px;  left: 50%; transform: translate( -50%);" >
+   
+     <div class="card-header" style="background-color: #D9B382">
+               <div class="row" style="flex-direction: row; align-items: center;" >
+                    <div class="col-3">
+                        <div style="width: 100%; display: flex; justify-content: center;">
+                            <img src="https://cdn-icons-png.flaticon.com/512/814/814245.png" alt="pan" style=" max-width: 50%; height: auto;">
+                        </div>
+                    </div>
+                    <div class="col-9">
+                        <h1 style="text-align: center;"> Consulta de Recepciones</h1>
+                    </div>
+                </div>
+            </div>
+    <div class="card-body">
+         <RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced" AllowSorting="true"  AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true"
+    Data="@listaRecepciones" TItem="Recepciones" LogicalFilterOperator="LogicalFilterOperator.Or" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" >
+        <Columns>
+       <RadzenDataGridColumn TItem="Recepciones" Property="RecepcionId" Title="ID" Width="100px" Filterable="false"  />
+
+        <RadzenDataGridColumn TItem="Recepciones" Property="ProductoId" Title="Producto"Width="160px" >
+            <Template Context="recepcion">
+             (@recepcion.ProductoId) @(ProductosBLL.Buscar(recepcion.ProductoId)?.Nombre) 
+            </Template>
+        </RadzenDataGridColumn>
+        
+        <RadzenDataGridColumn TItem="Recepciones" Property="Concepto" Title="Concepto" Width="160px" />
+        <RadzenDataGridColumn TItem="Recepciones" Property="Cantidad" Title="Cantidad" Width="160px"  />
+        <RadzenDataGridColumn TItem="Recepciones" Property="Fecha" Title="Fecha" Width="160px" FormatString="{0:d}" />
+        <RadzenDataGridColumn TItem="Recepciones" Filterable="false" Width="100px">
+            <Template Context="recepcion">
+            <a href="@($"/R_Recepciones/{recepcion.RecepcionId}")">Ver</a>
+            </Template>
+        </RadzenDataGridColumn>
+        </Columns>   
+    </RadzenDataGrid>
+     </div>
+   
+   </div>
+<RadzenContent >
+    
+
+</RadzenContent>
+
+
+
+@code{
+    List<Recepciones> listaRecepciones = new List<Recepciones>();
+    
+    
+   
+     protected override void OnInitialized()
+     {
+        listaRecepciones = RecepcionesBLL.GetList(o=> true);
+     }
+
+
+}
+
+
+
