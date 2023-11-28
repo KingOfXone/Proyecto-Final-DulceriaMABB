@@ -19,8 +19,4 @@
     <PackageReference Include="Radzen.Blazor" Version="4.22.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
 </Project>
