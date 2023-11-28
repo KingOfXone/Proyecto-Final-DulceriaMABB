@@ -1,0 +1,63 @@
+﻿@page "/C_Clientes"
+@inject ClientesBLL ClientesBLL
+
+<div class= "card font-monospace" style="max-width: 1000px;  left: 50%; transform: translate( -50%);">
+
+     <div class="card-header" style="background-color: #D9B382;" >
+        <div class="row" style="flex-direction: row; align-items: center;">
+            <div class="col-3">
+                <div style="width: 100%; display: flex; justify-content: center;">
+                    <img src="(Agregar una foto)" alt="pan" style=" max-width: 50%; height: auto;">
+                </div>
+            </div>
+            <div class="col-9">
+                <h1 style="text-align: center;"> Consulta de Clientes</h1>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced" AllowSorting="true"  AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true"
+            Data="@listaClientes" TItem="Clientes" LogicalFilterOperator="LogicalFilterOperator.Or" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"  >
+        <Columns>
+        <RadzenDataGridColumn TItem="Clientes" Property="ClienteId" Title="ID" Width="90px" Frozen="true" Filterable="false"/>
+        <RadzenDataGridColumn TItem="Clientes" Property="Nombre" Title="Nombre" Width="160px" Frozen="true" />
+        <RadzenDataGridColumn TItem="Clientes" Property="Apellido" Title="Apellido" Width="160px" Frozen="true"/>
+        <RadzenDataGridColumn TItem="Clientes" Property="Telefono" Title="Telefono" Width="160px" />
+        <RadzenDataGridColumn TItem="Clientes" Property="Correo" Title="Correo" Width="250px"/>
+        <RadzenDataGridColumn TItem="Clientes" Property="Cedula" Title="Cedula"Width="200px" />
+        <RadzenDataGridColumn TItem="Clientes" Property="Balance" Title="Balance" Width="160px" />
+        <RadzenDataGridColumn TItem="Clientes" Property="Fecha" Title="Fecha" Width="160px" FormatString="{0:d}"/>
+        <RadzenDataGridColumn TItem="Clientes" Filterable="false" Width="100px">
+            <Template Context="cliente">
+            <a href="@($"/R_Clientes/{cliente.ClienteId}")">Ver</a>
+            
+            </Template>
+        </RadzenDataGridColumn>
+        </Columns>   
+    </RadzenDataGrid>
+     </div>
+
+</div>
+<RadzenContent class="fs-6">
+    
+    
+
+</RadzenContent>
+
+
+
+@code{
+    List<Clientes> listaClientes = new List<Clientes>();
+    
+    
+   
+     protected override void OnInitialized()
+     {
+        listaClientes = ClientesBLL.GetList(o=> true);
+     }
+
+
+}
+
+
+
